@@ -1,0 +1,20 @@
+[
+{
+  "directory": "E:/MAP/Graph-Search-Algorithm/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/graph_search.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\graph_search.dir\\main.cpp.obj -c E:\\MAP\\Graph-Search-Algorithm\\main.cpp",
+  "file": "E:/MAP/Graph-Search-Algorithm/main.cpp",
+  "output": "CMakeFiles/graph_search.dir/main.cpp.obj"
+},
+{
+  "directory": "E:/MAP/Graph-Search-Algorithm/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/graph_search.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\graph_search.dir\\src\\Graph.cpp.obj -c E:\\MAP\\Graph-Search-Algorithm\\src\\Graph.cpp",
+  "file": "E:/MAP/Graph-Search-Algorithm/src/Graph.cpp",
+  "output": "CMakeFiles/graph_search.dir/src/Graph.cpp.obj"
+},
+{
+  "directory": "E:/MAP/Graph-Search-Algorithm/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/graph_search.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\graph_search.dir\\src\\Algorithms.cpp.obj -c E:\\MAP\\Graph-Search-Algorithm\\src\\Algorithms.cpp",
+  "file": "E:/MAP/Graph-Search-Algorithm/src/Algorithms.cpp",
+  "output": "CMakeFiles/graph_search.dir/src/Algorithms.cpp.obj"
+}
+]

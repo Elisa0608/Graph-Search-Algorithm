@@ -12,3 +12,5 @@ add_executable(graph_search
     src/Graph.cpp 
     src/Algorithms.cpp
 )
+
+set_property(TARGET graph_search PROPERTY CXX_STANDARD 17)

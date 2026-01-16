@@ -18,7 +18,7 @@ private:
 
 public:
     //constructorul pentru a seta usor isWeighted
-    Graph(bool isWeighted = false) : weighted(isWeighted) {}
+    Graph(bool isWeighted = false);
 
     void addEdge(const std::string& u, const std::string& v, int weight = 1);
     void readfile(const std::string& filename);
@@ -26,13 +26,15 @@ public:
 
     std::list<std::string> BFS(const std::string& startNode, const std::string& targetNode = "");
     std::list<std::string> DFS(const std::string& startNode, const std::string& targetNode = "");
+    
     void Dijkstra(const std::string& startNode);
-
     bool isCyclic();
     bool isConnected();
 
     std::list<std::string> reconstructPath(const std::string& start, const std::string& target, const std::map<std::string, std::string>& parent);
 
+    //getter pt listAdj
+    const std::map<std::string, std::vector<Edge>>& getAdjList() const;
 };
 
 

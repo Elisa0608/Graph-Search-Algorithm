@@ -8,6 +8,13 @@ using std::string;
 using std::cout;
 using std::endl;
 
+Graph::Graph(bool isWeighted) : weighted(isWeighted){}
+
+void Graph::addEdge(const std::string& u, const std::string& v, int weight){
+    adjList[u].push_back({v, weight});
+    adjList[v].push_back({u, weight});
+}
+
 void Graph::readfile(const string& filename){
     ifstream file(filename);
 
@@ -69,3 +76,6 @@ void Graph::printgraph() const {
     }
 }
 
+const std::map<std::string, std::vector<Edge>>& Graph::getAdjList() const {
+    return adjList;
+}

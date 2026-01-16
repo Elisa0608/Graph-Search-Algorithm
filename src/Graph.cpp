@@ -50,3 +50,22 @@ void Graph::readfile(const string& filename){
     cout << "Succesfuly read the graph from the file: " << filename << endl;
 }
 
+void Graph::printgraph() const {
+    for (const auto& [node, neighbors] : adjList){
+        std::cout << node << " -> [";
+
+        for (size_t i = 0; i < neighbors.size(); ++i){
+            std::cout << neighbors[i].to;
+
+            if (weighted){
+                std::cout << ":" << neighbors[i].weight;
+            }
+            //punem virgula doar daca nu suntem la ultimul vecin
+            if (i < neighbors.size() - 1){
+                std::cout << ", ";
+            }
+        }
+        std::cout << "]" << std::endl;
+    }
+}
+

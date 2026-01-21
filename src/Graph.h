@@ -23,9 +23,6 @@ public:
     void addEdge(const std::string& u, const std::string& v, int weight = 1);
     void readfile(const std::string& filename);
     void printgraph() const;
-
-    std::list<std::string> BFS(const std::string& startNode, const std::string& targetNode = "");
-    std::list<std::string> DFS(const std::string& startNode, const std::string& targetNode = "");
     
     void Dijkstra(const std::string& startNode);
     bool isCyclic();

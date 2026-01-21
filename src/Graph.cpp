@@ -79,3 +79,22 @@ void Graph::printgraph() const {
 const std::map<std::string, std::vector<Edge>>& Graph::getAdjList() const {
     return adjList;
 }
+
+void Graph::reconstructPath(const std::list<std::string>& path, const std::string& description){
+    std::cout << "Path reconstruction for: " << description << endl;
+
+    if (path.empty()){
+        std::cout << "No valid path was found" << std::endl;
+        return;
+    }
+
+    for(auto it = path.begin(); it != path.end(); ++it){
+        std::cout << *it;
+
+        if (std::next(it) != path.end()){
+            std::cout << "->";
+        }
+    }
+
+    std::cout << "Distance: " << (path.size() - 1) << "units" << std::endl << std::endl;
+}

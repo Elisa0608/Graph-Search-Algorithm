@@ -9,7 +9,7 @@
 std::list<std::string> Algorithms::DFS(const Graph& g, const std::string& startNode){
     std::stack<std::string> s;
     //in cazul dfs folosim set
-    std::set<std::string, bool> visited;
+    std::set<std::string> visited;
     std::map<std::string, std::string> parent;
     std::list<std::string> path;
     
@@ -44,6 +44,7 @@ std::list<std::string> Algorithms::DFS(const Graph& g, const std::string& startN
         }
     }
     std::cout << "Exploration complete. Total nodes visited: " << visited.size() << std::endl;
+    return path;
 }
 
 std::list<std::string> Algorithms::BFS(const Graph& g, const std::string& startNode, const std::string& targetNode){

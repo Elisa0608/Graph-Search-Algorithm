@@ -52,14 +52,14 @@ int main(int argcount, char* argvector[]){
     }
 
     if (allPaths && !startNode.empty() && !endNode.empty()){
-        std::cout << "Loading all paths between " <<startNode << "and " << endNode << std::endl;
+        std::cout << "Loading all paths between " <<startNode << " and " << endNode << std::endl;
         //apelam functia atribuita
     }
 
     if (!algo.empty() && !startNode.empty()){
         if (algo == "bfs" && !endNode.empty()){
             auto path = Algorithms::BFS(g, startNode, endNode);
-            g.reconstructPath(path, "BFS result (shortest path)");
+            g.reconstructPath(path, "BFS (shortest path)");
         }
         else if (algo == "dfs"){
             Algorithms::DFS(g, startNode);

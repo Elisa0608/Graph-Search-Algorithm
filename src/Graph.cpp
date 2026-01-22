@@ -95,6 +95,7 @@ void Graph::reconstructPath(const std::list<std::string>& path, const std::strin
             std::cout << "->";
         }
     }
+    std::cout << std::endl;
 
-    std::cout << "Distance: " << (path.size() - 1) << "units" << std::endl << std::endl;
+    std::cout << "Distance: " << (path.size() - 1) << " units" << std::endl << std::endl;
 }

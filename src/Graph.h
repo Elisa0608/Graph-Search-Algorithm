@@ -28,7 +28,7 @@ public:
     bool isCyclic();
     bool isConnected();
 
-    std::list<std::string> reconstructPath(const std::string& start, const std::string& target, const std::map<std::string, std::string>& parent);
+    void reconstructPath(const std::list<std::string>& path, const std::string& description);
 
     //getter pt listAdj
     const std::map<std::string, std::vector<Edge>>& getAdjList() const;

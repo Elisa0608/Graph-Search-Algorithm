@@ -39,7 +39,7 @@ void Graph::readfile(const string& filename){
                 //il numim remaining si nu v pt ca inca nu stim daca dupa dash avem pondere
                 // sau avem nodul to
 
-                size_t colon_position = edgeToken.find(':');
+                size_t colon_position = remaining.find(':');
                 if (colon_position != string::npos){
                     //ex A-B:5
                     string v = remaining.substr(0, colon_position);
@@ -54,7 +54,7 @@ void Graph::readfile(const string& filename){
         }
     }
     file.close();
-    cout << "Succesfuly read the graph from the file: " << filename << endl;
+    cout << "Succesfully read the graph from the file: " << filename << endl;
 }
 
 void Graph::printgraph() const {

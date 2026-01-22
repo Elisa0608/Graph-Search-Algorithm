@@ -1,11 +1,54 @@
 #include "Algorithms.h"
 #include "Graph.h"
 #include <queue>
+#include <stack>
+#include <set>
 #include <map>
 #include <algorithm>
 
+std::list<std::string> Algorithms::DFS(const Graph& g, const std::string& startNode){
+    std::stack<std::string> s;
+    //in cazul dfs folosim set
+    std::set<std::string, bool> visited;
+    std::map<std::string, std::string> parent;
+    std::list<std::string> path;
+    
+    const auto& adjList = g.getAdjList();
+
+    if (adjList.count(startNode) == 0){
+        std::cout << "Error: it seems like " << startNode << "does not exist" << std::endl;
+    }
+
+    s.push(startNode);
+    std::cout << "DFS starts at node: " << startNode << std::endl;
+
+    while(!s.empty()){
+        //stocam in current valoarea de deasupra
+        std::string curr = s.top();
+        //scoatem valoarea de deasupra din stack
+        s.pop();
+
+        //practic verifica daca e vizitat deja sau nu, visited.end() e special
+        //daca conditia e adev inseamna ca nu e vizitat
+        if(visited.find(curr) == visited.end()){
+            std::cout << "Node " << curr << " has been visited" << std::endl;
+            visited.insert(curr);
+
+            const auto& neighbors = adjList.at(curr);
+            //folosim rbegin si rend pentru ca vrem sa iteram de la sf la inceput
+            for (auto i = neighbors.rbegin(); i != neighbors.rend(); i++ ){
+                if (visited.find(i->to) == visited.end()){
+                    s.push(i->to);
+                }
+            }
+        }
+    }
+    std::cout << "Exploration complete. Total nodes visited: " << visited.size() << std::endl;
+}
+
 std::list<std::string> Algorithms::BFS(const Graph& g, const std::string& startNode, const std::string& targetNode){
     std::queue<std::string> q;
+    //in cazul bfs e mai folositor sa folosim map
     std::map<std::string, bool> visited;
     std::map<std::string, std::string> parent;
     std::list<std::string> path;

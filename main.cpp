@@ -38,9 +38,6 @@ int main(int argcount, char* argvector[]){
 
     if (showViz){
         g.printgraph();
-    }else{
-        std::cerr << "Error: unable to print the graph" << std::endl;
-        return 1;
     }
 
     if (!checkType.empty()){
@@ -59,17 +56,13 @@ int main(int argcount, char* argvector[]){
         //apelam functia atribuita
     }
 
-    if (!algo.empty() && !startNode.empty() && !endNode.empty()){
-        if (algo == "bfs"){
+    if (!algo.empty() && !startNode.empty()){
+        if (algo == "bfs" && !endNode.empty()){
             auto path = Algorithms::BFS(g, startNode, endNode);
             g.reconstructPath(path, "BFS result (shortest path)");
         }
         else if (algo == "dfs"){
-            /* acelasi lucru doar ca modificam pt dfs ->urmeaza
-            auto path = Algorithms::BFS(g, startNode, endNode);
-            g.reconstructPath(path, "BFS result (shortest path)");
-            */
-            std::cout << "DFS..." << std::endl;
+            Algorithms::DFS(g, startNode);
         }
         else if (algo == "dijkstra" && weighted){
             /* acelasi lucru doar ca modificam pt dijkstra ->urmeaza
@@ -80,15 +73,5 @@ int main(int argcount, char* argvector[]){
         }
         
     }
-    /*
-    EX TEST CODE
-    Graph g(false);
-    std::cout << "Trying to read the Graph from data/input_unweighted.txt.." << std::endl;
-    g.readfile("../data/input_unweighted.txt");
-
-    std::cout<< "/n Here's the Graph: " << std::endl;
-    g.printgraph();
-    */
-
     return 0;
 }

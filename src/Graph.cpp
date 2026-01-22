@@ -1,5 +1,7 @@
 #include "Graph.h"
 #include <fstream>
+#include <set>
+#include <stack>
 #include <sstream>
 
 using std::ifstream;
@@ -98,4 +100,64 @@ void Graph::reconstructPath(const std::list<std::string>& path, const std::strin
     std::cout << std::endl;
 
     std::cout << "Distance: " << (path.size() - 1) << " units" << std::endl << std::endl;
+}
+
+bool Graph::isConnected(){
+    std::set<std::string> visited;
+    std::stack<std::string> s;
+
+    if (adjList.empty()) return true;
+
+    std::string startNode = adjList.begin()->first;
+
+    s.push(startNode);
+    while(!s.empty()){
+        std::string curr = s.top();
+        s.pop();
+
+        if (visited.find(curr) == visited.end()) {
+            visited.insert(curr);
+            for (const auto& edge : adjList.at(curr)) {
+                if (visited.find(edge.to) == visited.end()) {
+                    s.push(edge.to);
+                }
+            }
+        }
+    }
+    if (visited.size() == adjList.size()) return true;
+    else return false;
+}
+
+bool Graph::isCyclic(){
+    std::set<std::string> visited;
+
+    for (auto const& [node, neighbors] : adjList){
+        if (visited.find(node) == visited.end()){
+            //cream un stack cu perechile de nod curent si nod parinte
+            std::stack<std::pair<std::string, std::string>> s;
+            s.push({node, ""});
+            visited.insert(node);
+
+            while (!s.empty()){
+                auto [curr, parent] = s.top();
+                s.pop();
+
+                if (visited.find(curr) != visited.end()){
+                    return true;
+                }
+                visited.insert(curr);
+
+                for (const auto& edge : adjList.at(curr)) {
+                    if (edge.to != parent) { 
+                        if (visited.find(edge.to) != visited.end()){
+                            return true;
+                        }
+                        visited.insert(edge.to);
+                        s.push({edge.to, curr});
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }

@@ -43,11 +43,19 @@ int main(int argcount, char* argvector[]){
     if (!checkType.empty()){
         if (checkType == "connected"){
             std::cout << "Checking if the graph is connected: loading..." << std::endl;
-            //apelam functia atribuita
+            if (g.isConnected()){
+                std::cout << "The graph is connected." << std::endl;
+            }else{
+                std::cout << "The graph is not connected." << std::endl;
+            }
         }
         else if(checkType == "cycle"){
             std::cout << "Detecting cycles: loading..." <<std::endl;
-            //apelam functia atribuita
+            if (g.isCyclic()){
+                std::cout << "The graph contains cycles." << std::endl;
+            }else{
+                std::cout << "The graph does not contain cycles." << std::endl;
+            }
         }
     }
 

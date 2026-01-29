@@ -96,4 +96,82 @@ std::list<std::string> Algorithms::BFS(const Graph& g, const std::string& startN
     return path;
 }
 
-// implementare viitoare
+std::list<std::string> Algorithms::Dijkstra(const Graph& g, const std::string& startNode, const std::string& targetNode ){
+    std::map<std::string, int> distances;
+    std::map<std::string, std::string>parent; 
+    std::set<std::string> unvisited;
+    std::list<std::string> path;
+
+    const auto& adjList = g.getAdjList();
+
+    for (auto const& [node, neighbors] : adjList) {
+        distances[node] = 1000000; // un numar mare reprezentand infinit
+        unvisited.insert(node);
+    }
+    distances[startNode] = 0;
+    unvisited.insert(startNode);
+
+    while (!unvisited.empty()){
+        std::string u = "";
+        int min_dist = 1000001;
+
+        for (const std::string& node : unvisited){
+            if (distances[node] < min_dist){
+                min_dist = distances[node];
+                u = node;
+            }
+        }
+
+        if (u == "" || u == targetNode) break;
+        
+        unvisited.erase(u);
+
+        if (adjList.count(u)) {
+            for (const auto& edge : adjList.at(u)) {
+                if (unvisited.find(edge.to) != unvisited.end()) {
+                    int alt = distances[u] + edge.weight;
+                    if (alt < distances[edge.to]) {
+                        distances[edge.to] = alt;
+                        parent[edge.to] = u;
+                    }
+                }
+            }
+        }
+    }
+
+    if (parent.find(targetNode) != parent.end() || startNode == targetNode){
+        std::string curr = targetNode;
+        while ( curr != startNode){
+            path.push_front(curr);
+            curr = parent[curr];
+        }
+        path.push_front(startNode);
+    }
+    return path;
+}
+
+void Algorithms::allPaths(const Graph& g, const std::string& curr, const std::string& target, std::set<std::string>& visited, std::vector<std::string>& path){
+    visited.insert(curr);
+    path.push_back(curr);
+
+    if (curr ==  target){
+        //am gasit un drum complet, il afisam
+        for (size_t i = 0; i < path.size(); ++i){
+            std::cout << path[i] << (i == path.size() - 1 ? "" : " -> ");
+        }
+        std::cout << std::endl;
+    }else{
+        const auto& adj = g.getAdjList();
+        if (adj.count(curr)){
+            for (const auto& edge : adj.at(curr)){
+                if (visited.find(edge.to) == visited.end()){
+                    allPaths(g, edge.to, target, visited, path);
+                }
+            }
+        }
+    }
+    // pasul de backtracking, acum scoatem nodul pentru a permite alte rute prin el
+    path.pop_back();
+    visited.erase(curr);
+
+}

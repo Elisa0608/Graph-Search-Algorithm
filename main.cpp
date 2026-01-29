@@ -61,7 +61,10 @@ int main(int argcount, char* argvector[]){
 
     if (allPaths && !startNode.empty() && !endNode.empty()){
         std::cout << "Loading all paths between " <<startNode << " and " << endNode << std::endl;
-        //apelam functia atribuita
+        std::set<std::string> visited;
+        std::vector<std::string> currentPath;
+        Algorithms::allPaths(g, startNode, endNode, visited, currentPath);
+        std::cout << "Done! " << std::endl;
     }
 
     if (!algo.empty() && !startNode.empty()){
@@ -72,14 +75,14 @@ int main(int argcount, char* argvector[]){
         else if (algo == "dfs"){
             Algorithms::DFS(g, startNode);
         }
-        else if (algo == "dijkstra" && weighted){
-            /* acelasi lucru doar ca modificam pt dijkstra ->urmeaza
-            auto path = Algorithms::BFS(g, startNode, endNode);
-            g.reconstructPath(path, "BFS result (shortest path)");
-            */
-            std::cout << "Dijkstra..." << std::endl;
+        else if (algo == "dijkstra"){
+            if (weighted){
+                auto path = Algorithms::Dijkstra(g, startNode, endNode);
+                g.reconstructPath(path, "Dijkstra result (min-cost path)");
+            }else {
+                std::cout << "Warning: dijkstra requires a weighted graph! Add '--weighted'. " << std::endl;
+            }
         }
-        
     }
     return 0;
 }

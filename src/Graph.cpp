@@ -90,16 +90,37 @@ void Graph::reconstructPath(const std::list<std::string>& path, const std::strin
         return;
     }
 
-    for(auto it = path.begin(); it != path.end(); ++it){
-        std::cout << *it;
+    int totalCost = 0;
+    auto it = path.begin();
+    
+    // Afisam primul nod
+    std::cout << *it;
 
-        if (std::next(it) != path.end()){
-            std::cout << "->";
+    while (std::next(it) != path.end()){
+        std::string u = *it;
+        std::string v = *std::next(it);
+    
+        int currentWeight = 0;
+        if (adjList.count(u)) {
+            for (const auto& edge : adjList.at(u)) {
+                if (edge.to == v) {
+                    currentWeight = edge.weight;
+                    break;
+                }
+            }
         }
+        totalCost += currentWeight;
+
+        std::cout << " -> " << v;
+        ++it;
     }
     std::cout << std::endl;
 
-    std::cout << "Distance: " << (path.size() - 1) << " units" << std::endl << std::endl;
+    if (weighted) {
+        std::cout << "Total Cost (Weight): " << totalCost << std::endl << std::endl;
+    } else {
+        std::cout << "Distance: " << (path.size() - 1) << " hops" << std::endl << std::endl;
+    }
 }
 
 bool Graph::isConnected(){
@@ -141,11 +162,6 @@ bool Graph::isCyclic(){
             while (!s.empty()){
                 auto [curr, parent] = s.top();
                 s.pop();
-
-                if (visited.find(curr) != visited.end()){
-                    return true;
-                }
-                visited.insert(curr);
 
                 for (const auto& edge : adjList.at(curr)) {
                     if (edge.to != parent) { 

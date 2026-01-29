@@ -24,7 +24,6 @@ public:
     void readfile(const std::string& filename);
     void printgraph() const;
     
-    void Dijkstra(const std::string& startNode);
     bool isCyclic();
     bool isConnected();
 

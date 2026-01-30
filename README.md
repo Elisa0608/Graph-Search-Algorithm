@@ -27,12 +27,12 @@ The project is organized into modular files for better separation of concerns:
 
 .
 ├── src/
-│   ├── Graph.cpp         # Implementation of the Graph class (adding edges, nodes)
-│   └── Algorithms.cpp    # Implementation of BFS and DFS
+│   ├── Graph.cpp         
+│   └── Algorithms.cpp    
 ├── data/
-│   └── input.txt         # Input file for the graph
-├── README.md             # This file
-└── main.cpp              # Main entry point (calling the algorithms)
+│   └── input.txt        
+├── README.md             
+└── main.cpp              
 
 ## Author
 * NAME: Mosoarca Nicoleta-Elisa

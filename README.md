@@ -26,7 +26,7 @@ This application serves as a versatile tool for graph navigation and structural 
 
 * Clone repository
 ```bash
-git clone [https://github.com/Elisa0608/Graph-Search-Algorithm.git](https://github.com/Elisa0608/Graph-Search-Algorithm.git)
+git clone https://github.com/Elisa0608/Graph-Search-Algorithm.git
 cd Graph-Search-Algorithm
 ```
 

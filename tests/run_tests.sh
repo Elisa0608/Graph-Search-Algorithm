@@ -1,34 +1,47 @@
 #!/bin/bash
+set -e 
 
-echo "Compiling project..."
-cd ../build
-cmake .. && make
+cd "$(dirname "$0")/.."
 
-echo "Running Automated Integration Tests..."
+echo "--- Step 1: Compiling project ---"
+mkdir -p build && cd build
+cmake ..
+cmake --build .
 
-RESULT_DIJKSTRA=$(./graph_search --file ../data/input_weighted.txt --start A --end E --algo dijkstra --weighted | grep "Total Cost (Weight): 7")
-
-if [ ! -empty "$RESULT_DIJKSTRA" ]; then
-    echo "[PASS] Test 1: Dijkstra optimal path (Cost 7)"
-else
-    echo "[FAIL] Test 1: Dijkstra failed or incorrect cost."
+EXECUTABLE="./graph_search"
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+    EXECUTABLE="./graph_search.exe"
 fi
 
-RESULT_BFS=$(./graph_search --file ../data/input_unweighted.txt --start A --end C --algo bfs | grep "Distance: 1 hops")
+echo "--- Step 2: Running Full Integration Tests ---"
 
-if [ ! -empty "$RESULT_BFS" ]; then
-    echo "[PASS] Test 2: BFS shortest path (1 hop)"
-else
-    echo "[FAIL] Test 2: BFS failed or incorrect distance."
-fi
+# Test 1: Dijkstra (Weighted)
+RES1=$($EXECUTABLE --file ../data/input_weighted.txt --start A --end E --algo dijkstra --weighted | grep "Total Cost (Weight): 7")
+[ -n "$RES1" ] && echo "[PASS] Dijkstra" || echo "[FAIL] Dijkstra"
 
-RESULT_CONN=$(./graph_search --file ../data/input_unweighted.txt --check connected | grep "The graph is connected.")
+# Test 2: BFS (Shortest Path)
+RES2=$($EXECUTABLE --file ../data/input_unweighted.txt --start A --end C --algo bfs | grep "Distance: 1 hops")
+[ -n "$RES2" ] && echo "[PASS] BFS" || echo "[FAIL] BFS"
 
-if [ ! -empty "$RESULT_CONN" ]; then
-    echo "[PASS] Test 3: Connectivity check"
-else
-    echo "[FAIL] Test 3: Connectivity check failed."
-fi
+# Test 3: DFS (Exploration)
+RES3=$($EXECUTABLE --file ../data/input_unweighted.txt --start A --algo dfs | grep "Exploration complete")
+[ -n "$RES3" ] && echo "[PASS] DFS" || echo "[FAIL] DFS"
+
+# Test 4: Cycle Detection
+RES4=$($EXECUTABLE --file ../data/input_unweighted.txt --check cycle | grep "The graph contains cycles.")
+[ -n "$RES4" ] && echo "[PASS] Cycle Detection" || echo "[FAIL] Cycle Detection"
+
+# Test 5: All Paths
+RES5=$($EXECUTABLE --file ../data/input_weighted.txt --start A --end D --all_paths | grep "Done!")
+[ -n "$RES5" ] && echo "[PASS] All Paths Logic" || echo "[FAIL] All Paths Logic"
+
+# Test 6: Connectivity
+RES6=$($EXECUTABLE --file ../data/input_unweighted.txt --check connected | grep "The graph is connected.")
+[ -n "$RES6" ] && echo "[PASS] Connectivity" || echo "[FAIL] Connectivity"
+
+# Test 7: Error Handling (Negative Test)
+RES7=$($EXECUTABLE --file non_existent.txt 2>&1 | grep "Error: it seems like the file is missing!")
+[ -n "$RES7" ] && echo "[PASS] Error Handling" || echo "[FAIL] Error Handling"
 
 echo "---------------------------------------"
-echo "Tests completed."
+echo "All features verified."

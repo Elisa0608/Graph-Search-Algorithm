@@ -26,7 +26,7 @@ This application serves as a versatile tool for graph navigation and structural 
 
 * Clone repository
 ```bash
-git clone https://github.com/username/Graph-Search-Algorithm.git
+git clone [https://github.com/Elisa0608/Graph-Search-Algorithm.git](https://github.com/Elisa0608/Graph-Search-Algorithm.git)
 cd Graph-Search-Algorithm
 ```
 
@@ -148,21 +148,34 @@ To run the automated tests, use the provided script:
 cd tests
 chmod +x run_tests.sh
 ./run_tests.sh
-To test the application, multiple graph configurations were used:
 ```
+
+To test the application, multiple graph configurations were used:
 
 * **Weighted Graphs**: Verified that Dijkstra correctly identifies the lowest cost even if it requires more hops than BFS.
 * **Disconnected Graphs**: Confirmed that `isConnected()` accurately identifies graphs with isolated clusters.
 * **Cyclic vs Acyclic**: Tested with trees and meshes to ensure `isCyclic()` correctly identifies loops.
 
 ## Docker
+To run tests via Docker (Cross-platform recommended):
+```bash
+docker run --rm --entrypoint /bin/bash elisamosoarca/graph-tool ./tests/run_tests.sh
+```
 
-* **Build Image**: 
+* **Pull pre-built image**: 
+```bash
+docker pull elisamosoarca/graph-tool:latest
+```
+
+* **Build Image Locally**: 
 ```bash
 docker build -t graph-tool .
 ```
 
-* **Run Container**: 
+* **Usage Example (Run a single command)**: 
+
+This command downloads the image and runs the Dijkstra algorithm as a demo:
+
 ```bash
-docker run --rm graph-tool --file data/input_weighted.txt --algo dijkstra --start A --end C --weighted
+docker run --rm elisamosoarca/graph-tool --file data/input_weighted.txt --algo dijkstra --start A --end E --weighted
 ```

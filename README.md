@@ -120,7 +120,7 @@ The graph contains cycles.
 │   ├── input_weighted.txt  
 │   └── input_unweighted.txt 
 ├── tests/
-│   └── integration_test.sh 
+│   └── run_tests.sh 
 ├── main.cpp   
 ├── CMakeLists.txt   
 ├── Dockerfile   

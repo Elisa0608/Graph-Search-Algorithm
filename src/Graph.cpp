@@ -93,7 +93,7 @@ void Graph::reconstructPath(const std::list<std::string>& path, const std::strin
     int totalCost = 0;
     auto it = path.begin();
     
-    // Afisam primul nod
+    // afisam primul nod
     std::cout << *it;
 
     while (std::next(it) != path.end()){

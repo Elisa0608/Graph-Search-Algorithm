@@ -1,47 +1,32 @@
-# Multi-stage build pentru o imagine finală mai mică
-FROM gcc:latest AS builder
+FROM ubuntu:24.04
 
-# Instalează CMake
-RUN apt-get update && apt-get install -y cmake && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    g++ \
+    dos2unix \
+    && rm -rf /var/lib/apt/lists/*
 
-# Setează directorul de lucru
 WORKDIR /app
 
-# Copiază toate fișierele proiectului
 COPY . .
 
-# Creează directorul src/ și mută fișierele necesare
 RUN mkdir -p src && \
-    mv Graph.cpp Graph.h Algorithms.cpp Algorithms.h src/ 2>/dev/null || true
+    for f in Graph.cpp Graph.h Algorithms.cpp Algorithms.h; do \
+        if [ -f "$f" ]; then mv "$f" src/; fi; \
+    done
 
-# Creează directorul data/ și mută fișierele de input
 RUN mkdir -p data && \
-    mv input_*.txt data/ 2>/dev/null || true
+    for f in input_*.txt; do \
+        if [ -f "$f" ]; then mv "$f" data/; fi; \
+    done
 
-# Compilează proiectul
+RUN dos2unix tests/run_tests.sh && \
+    chmod +x tests/run_tests.sh
+
 RUN mkdir -p build && cd build && \
     cmake .. && \
     cmake --build .
 
-# Stage final - imagine minimă pentru rulare
-FROM ubuntu:22.04
-
-WORKDIR /app
-
-# Copiază executabilul compilat
-COPY --from=builder /app/build/graph_search .
-
-# Copiaza fisierele de date necesare pentru teste
-COPY --from=builder /app/data ./data
-
-# Instaleaza dependentele runtime necesare (libstdc++)
-RUN apt-get update && \
-    apt-get install -y libstdc++6 && \
-    rm -rf /var/lib/apt/lists/*
-
-# Seteaza executabilul ca entry point
-ENTRYPOINT ["./graph_search"]
-
-# Argumentele default (pot fi suprascrise la rulare)
+ENTRYPOINT ["./build/graph_search"]
 CMD ["--help"]

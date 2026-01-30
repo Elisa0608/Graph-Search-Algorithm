@@ -28,14 +28,14 @@ std::list<std::string> Algorithms::DFS(const Graph& g, const std::string& startN
         //scoatem valoarea de deasupra din stack
         s.pop();
 
-        //practic verifica daca e vizitat deja sau nu, visited.end() e special
-        //daca conditia e adev inseamna ca nu e vizitat
+        //practic verifica daca e vizitat deja sau nu
+        //daca conditia e adevarata inseamna ca e vizitat
         if(visited.find(curr) == visited.end()){
             std::cout << "Node " << curr << " has been visited" << std::endl;
             visited.insert(curr);
 
             const auto& neighbors = adjList.at(curr);
-            //folosim rbegin si rend pentru ca vrem sa iteram de la sf la inceput
+            //folosim rbegin si rend pentru ca vrem sa iteram de la sfarsit la inceput
             for (auto i = neighbors.rbegin(); i != neighbors.rend(); i++ ){
                 if (visited.find(i->to) == visited.end()){
                     s.push(i->to);

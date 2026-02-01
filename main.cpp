@@ -17,6 +17,7 @@ int main(int argcount, char* argvector[]){
     for (int i=1; i < argcount; ++i){
         std::string arg = argvector[i];
 
+        //verificam argumentele
         if (arg == "--file" && i + 1 < argcount) filename = argvector[++i];
         else if (arg == "--start" && i + 1 < argcount) startNode = argvector[++i];
         else if (arg == "--end" && i + 1 < argcount) endNode = argvector[++i];
@@ -32,7 +33,7 @@ int main(int argcount, char* argvector[]){
             return 1;
         }
 
-        //initializam si incarcam datele!!
+    //initializam si incarcam datele!!
     Graph g(weighted);
     g.readfile(filename);
 
